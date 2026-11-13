@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة المهندسين</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        body { font-family: 'Tajawal', sans-serif; transition: background-color 0.3s, color 0.3s; }
+        .typing-text { border-left: 2px solid; white-space: nowrap; overflow: hidden; animation: typing 3s steps(30, end), blink-caret .75s step-end infinite; max-width: max-content; margin: auto; }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: currentColor; } }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100 min-h-screen">
+
+    <!-- شريط التنقل العلوي (نفس لون الخلفية السفلية لتناسق احترافي) -->
+    <nav class="bg-slate-900 text-white shadow-md p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-emerald-400"><i class="fas fa-microchip ml-2"></i>منصة المهندسين</h1>
+            <div class="flex gap-4 items-center">
+                <button id="themeToggle" class="p-2 rounded-full hover:bg-slate-700 transition">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+                </button>
+                <button id="adminLoginBtn" class="text-sm text-gray-400 hover:text-emerald-400 transition" title="تسجيل دخول الإدارة"><i class="fas fa-lock"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- القسم التعريفي -->
+    <header class="text-center py-16 px-4 bg-gradient-to-b from-slate-900 to-slate-800 text-white shadow-lg">
+        <!-- أيقونة الهندسة الكهربائية -->
+        <div class="w-32 h-32 mx-auto bg-emerald-500 rounded-full flex items-center justify-center text-white text-6xl shadow-lg border-4 border-slate-700 mb-6">
+            <i class="fas fa-bolt"></i>
+        </div>
+        
+        <h2 class="text-xl italic mb-3 font-light text-gray-300">"الهندسة هي فن توجيه طاقات الطبيعة لخدمة الإنسان"</h2>
+        <h3 class="text-3xl font-bold mb-2">عمر عبد الرحمن البلوشي</h3>
+        <p class="text-lg text-emerald-400 mb-6">أخصائي هندسة كهربائية</p>
+        <div class="text-2xl font-bold text-yellow-400 typing-text">"وَقُل رَّبِّ زِدْنِي عِلْمًا"</div>
+    </header>
+
+    <!-- لوحة تحكم المسؤول (تظهر فقط بعد تسجيل الدخول) -->
+    <div id="adminPanel" class="hidden container mx-auto mt-8 p-6 bg-slate-800 border border-emerald-500 text-white rounded-lg shadow-xl max-w-4xl">
+        <div class="flex justify-between items-center mb-6 border-b border-slate-600 pb-4">
+            <h3 class="text-2xl font-bold text-emerald-400"><i class="fas fa-tools"></i> لوحة تحكم المسؤول</h3>
+            <button id="logoutBtn" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition">تسجيل الخروج</button>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- إضافة مادة جديدة -->
+            <form id="addChapterForm" class="flex flex-col gap-4">
+                <select id="stageSelect" class="p-3 border rounded bg-slate-700 border-slate-600 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <option value="diploma">دبلوم</option>
+                    <option value="adv_diploma">دبلوم متقدم</option>
+                    <option value="bachelor">بكالوريوس</option>
+                </select>
+                <input type="text" id="subjectName" placeholder="اسم المادة (إجباري)" class="p-3 border rounded bg-slate-700 border-slate-600 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                <input type="text" id="chapterName" placeholder="اسم الشابتر (إجباري)" class="p-3 border rounded bg-slate-700 border-slate-600 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500" required>
+                
+                <!-- الروابط أصبحت اختيارية بالكامل -->
+                <input type="url" id="pdfLink" placeholder="رابط ملخص PDF (اختياري)" class="p-3 border rounded bg-slate-700 border-slate-600 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <input type="url" id="videoLink" placeholder="رابط فيديو يوتيوب (اختياري)" class="p-3 border rounded bg-slate-700 border-slate-600 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <input type="url" id="quizLink" placeholder="رابط الاختبار (اختياري)" class="p-3 border rounded bg-slate-700 border-slate-600 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                
+                <button type="submit" class="bg-emerald-600 text-white p-3 rounded hover:bg-emerald-700 font-bold text-lg transition shadow-lg mt-2">نشر المحتوى</button>
+            </form>
+            <!-- الإحصائيات -->
+            <div class="bg-slate-700 p-6 rounded-lg shadow-inner">
+                <h4 class="text-xl font-bold mb-4 border-b border-slate-500 pb-2 text-emerald-300">إحصائيات زيارات الأقسام (سرية)</h4>
+                <ul id="statsList" class="space-y-4 text-lg mt-4">
+                    <li class="flex justify-between items-center bg-slate-800 p-3 rounded"><span>دبلوم:</span> <span id="stat-diploma" class="font-bold text-emerald-400 text-2xl">0</span></li>
+                    <li class="flex justify-between items-center bg-slate-800 p-3 rounded"><span>دبلوم متقدم:</span> <span id="stat-adv_diploma" class="font-bold text-emerald-400 text-2xl">0</span></li>
+                    <li class="flex justify-between items-center bg-slate-800 p-3 rounded"><span>بكالوريوس:</span> <span id="stat-bachelor" class="font-bold text-emerald-400 text-2xl">0</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- حاوية المراحل الدراسية (بشكل عمودي) -->
+    <main id="stagesContainer" class="container mx-auto p-4 my-12 max-w-md">
+        <h3 class="text-2xl font-bold text-center mb-8 text-slate-800 dark:text-gray-200">اختر المرحلة الدراسية</h3>
+        <div class="flex flex-col gap-6">
+            <button onclick="loadStage('diploma')" class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-1 transition transform border-r-8 border-emerald-500 focus:outline-none flex items-center justify-between group">
+                <div class="text-right">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white">دبلوم</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mt-1">Diploma</p>
+                </div>
+                <i class="fas fa-chevron-left text-2xl text-gray-300 group-hover:text-emerald-500 transition"></i>
+            </button>
+            
+            <button onclick="loadStage('adv_diploma')" class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-1 transition transform border-r-8 border-teal-500 focus:outline-none flex items-center justify-between group">
+                <div class="text-right">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white">دبلوم متقدم</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mt-1">Advanced Diploma</p>
+                </div>
+                <i class="fas fa-chevron-left text-2xl text-gray-300 group-hover:text-teal-500 transition"></i>
+            </button>
+            
+            <button onclick="loadStage('bachelor')" class="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md hover:shadow-xl hover:-translate-y-1 transition transform border-r-8 border-cyan-600 focus:outline-none flex items-center justify-between group">
+                <div class="text-right">
+                    <h3 class="text-2xl font-bold text-slate-800 dark:text-white">بكالوريوس</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mt-1">Bachelor</p>
+                </div>
+                <i class="fas fa-chevron-left text-2xl text-gray-300 group-hover:text-cyan-600 transition"></i>
+            </button>
+        </div>
+    </main>
+
+    <!-- منطقة عرض المحتوى (تظهر كصفحة مستقلة وتختفي المراحل) -->
+    <div id="contentArea" class="hidden container mx-auto p-4 my-8 max-w-4xl">
+        <!-- زر الرجوع -->
+        <button onclick="goBack()" class="mb-6 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-white px-5 py-2 rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition flex items-center gap-2 font-bold shadow">
+            <i class="fas fa-arrow-right"></i> الرجوع للمراحل
+        </button>
+
+        <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl">
+            <h2 id="currentStageTitle" class="text-3xl font-bold mb-8 text-center border-b border-gray-200 dark:border-gray-700 pb-4 text-emerald-600 dark:text-emerald-400"></h2>
+            <div id="materialsList" class="space-y-6">
+                <!-- المحتوى سيظهر هنا -->
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة تسجيل الدخول المخفية -->
+    <div id="loginModal" class="hidden fixed inset-0 bg-slate-900 bg-opacity-80 flex items-center justify-center z-50">
+        <div class="bg-white dark:bg-slate-800 p-8 rounded-xl w-96 shadow-2xl">
+            <h3 class="text-2xl font-bold mb-6 border-b pb-3 text-slate-800 dark:text-white">دخول الإدارة</h3>
+            <input type="email" id="email" placeholder="البريد الإلكتروني" class="w-full p-3 border rounded-lg mb-4 text-black bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <input type="password" id="password" placeholder="كلمة المرور" class="w-full p-3 border rounded-lg mb-6 text-black bg-gray-50 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <div class="flex gap-3">
+                <button id="loginSubmit" class="bg-emerald-600 text-white w-full py-3 rounded-lg hover:bg-emerald-700 font-bold transition">دخول</button>
+                <button id="closeLogin" class="bg-gray-300 text-gray-800 w-full py-3 rounded-lg hover:bg-gray-400 font-bold transition">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- أكواد Firebase -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, where, increment, doc, setDoc, getDoc, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // إعدادات Firebase الخاصة بك
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1KULZWnhTgdDO2PcvP8YCAZYwztR269w",
+            authDomain: "eng-academy-4d3a8.firebaseapp.com",
+            projectId: "eng-academy-4d3a8",
+            storageBucket: "eng-academy-4d3a8.firebasestorage.app",
+            messagingSenderId: "159632990393",
+            appId: "1:159632990393:web:fc7299c75e5208d4657b68"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // الوضع الليلي
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => document.documentElement.classList.toggle('dark'));
+
+        // إدارة تسجيل الدخول
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
+        const loginModal = document.getElementById('loginModal');
+        const closeLogin = document.getElementById('closeLogin');
+        const loginSubmit = document.getElementById('loginSubmit');
+        const adminPanel = document.getElementById('adminPanel');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        adminLoginBtn.addEventListener('click', () => loginModal.classList.remove('hidden'));
+        closeLogin.addEventListener('click', () => loginModal.classList.add('hidden'));
+
+        loginSubmit.addEventListener('click', () => {
+            const e = document.getElementById('email').value;
+            const p = document.getElementById('password').value;
+            signInWithEmailAndPassword(auth, e, p).then(() => {
+                loginModal.classList.add('hidden');
+                document.getElementById('email').value = '';
+                document.getElementById('password').value = '';
+                alert('تم تسجيل الدخول بنجاح');
+            }).catch(err => alert('خطأ في البريد الإلكتروني أو كلمة المرور'));
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            signOut(auth);
+            alert('تم تسجيل الخروج');
+        });
+
+        // التحقق من حالة المستخدم
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                adminPanel.classList.remove('hidden');
+                fetchStats(); 
+            } else {
+                adminPanel.classList.add('hidden');
+            }
+        });
+
+        // إضافة محتوى جديد لقاعدة البيانات (تم جعل الروابط اختيارية)
+        document.getElementById('addChapterForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                await addDoc(collection(db, "content"), {
+                    stage: document.getElementById('stageSelect').value,
+                    subject: document.getElementById('subjectName').value,
+                    chapter: document.getElementById('chapterName').value,
+                    pdf: document.getElementById('pdfLink').value || null, // اختياري
+                    video: document.getElementById('videoLink').value || null, // اختياري
+                    quiz: document.getElementById('quizLink').value || null, // اختياري
+                    timestamp: new Date()
+                });
+                alert('تم نشر المحتوى بنجاح!');
+                e.target.reset();
+            } catch (error) {
+                alert('حدث خطأ: تأكد من صلاحياتك');
+                console.error(error);
+            }
+        });
+
+        // جلب الإحصائيات (للمدير فقط)
+        async function fetchStats() {
+            const stages = ['diploma', 'adv_diploma', 'bachelor'];
+            for(let stage of stages) {
+                try {
+                    const docRef = doc(db, "stats", stage);
+                    const docSnap = await getDoc(docRef);
+                    if (docSnap.exists()) {
+                        document.getElementById(`stat-${stage}`).innerText = docSnap.data().views;
+                    }
+                } catch(e) { console.log('خطأ في جلب الإحصائيات:', e); }
+            }
+        }
+
+        // دالة العودة للصفحة الرئيسية
+        window.goBack = function() {
+            document.getElementById('contentArea').classList.add('hidden');
+            document.getElementById('stagesContainer').classList.remove('hidden');
+            document.getElementById('materialsList').innerHTML = ''; // تفريغ المحتوى
+        }
+
+        // دالة جلب المواد للطلاب
+        window.loadStage = async function(stageId) {
+            const stageNames = { diploma: 'دبلوم', adv_diploma: 'دبلوم متقدم', bachelor: 'بكالوريوس' };
+            
+            // إخفاء المراحل وإظهار شاشة المحتوى
+            document.getElementById('stagesContainer').classList.add('hidden');
+            document.getElementById('contentArea').classList.remove('hidden');
+            
+            document.getElementById('currentStageTitle').innerText = "مواد مرحلة: " + stageNames[stageId];
+            const list = document.getElementById('materialsList');
+            list.innerHTML = '<div class="text-center py-10"><i class="fas fa-spinner fa-spin text-4xl text-emerald-500 mb-4"></i><p class="text-lg">جاري تحميل المواد...</p></div>';
+
+            // تسجيل الزيارة 
+            try {
+                const statRef = doc(db, "stats", stageId);
+                await setDoc(statRef, { views: increment(1) }, { merge: true });
+            } catch(e) { }
+
+            // جلب المواد من Firestore
+            try {
+                const q = query(collection(db, "content"), where("stage", "==", stageId));
+                const querySnapshot = await getDocs(q);
+                
+                list.innerHTML = '';
+                if(querySnapshot.empty) {
+                    list.innerHTML = '<div class="text-center py-10 bg-gray-50 dark:bg-slate-700 rounded-lg"><i class="fas fa-folder-open text-4xl text-gray-400 mb-4"></i><p class="text-gray-500 dark:text-gray-300 text-lg">لم يتم إضافة مواد لهذه المرحلة حتى الآن.</p></div>';
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    list.innerHTML += `
+                        <div class="border border-gray-200 dark:border-slate-600 p-6 rounded-xl bg-gray-50 dark:bg-slate-700 mb-4 hover:shadow-lg transition duration-300">
+                            <h4 class="text-2xl font-bold mb-5 text-slate-800 dark:text-white border-r-4 border-emerald-500 pr-3">${data.subject} - ${data.chapter}</h4>
+                            <div class="flex flex-wrap gap-3">
+                                <!-- تظهر الأزرار فقط في حال قمت بوضع رابط لها -->
+                                ${data.pdf ? `<a href="${data.pdf}" target="_blank" class="bg-red-500 text-white px-5 py-2.5 rounded-lg hover:bg-red-600 transition flex items-center gap-2 shadow"><i class="fas fa-file-pdf text-lg"></i> ملخص PDF</a>` : ''}
+                                ${data.video ? `<a href="${data.video}" target="_blank" class="bg-red-600 text-white px-5 py-2.5 rounded-lg hover:bg-red-700 transition flex items-center gap-2 shadow"><i class="fab fa-youtube text-lg"></i> فيديو الشرح</a>` : ''}
+                                ${data.quiz ? `<a href="${data.quiz}" target="_blank" class="bg-emerald-500 text-white px-5 py-2.5 rounded-lg hover:bg-emerald-600 transition flex items-center gap-2 shadow"><i class="fas fa-tasks text-lg"></i> اختبر نفسك</a>` : ''}
+                                ${(!data.pdf && !data.video && !data.quiz) ? `<span class="text-gray-500 dark:text-gray-400 italic">لا توجد مرفقات مضافة حالياً.</span>` : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                list.innerHTML = '<p class="text-center text-red-500 py-4 font-bold">حدث خطأ في تحميل المواد.</p>';
+                console.error(error);
+            }
+        };
+    </script>
+</body>
+</html>
